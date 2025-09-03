@@ -1,11 +1,41 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Header from "@/components/Header";
+import QuestionPanel from "@/components/QuestionPanel";
+import PracticePanel from "@/components/PracticePanel";
+import EvaluationPanel from "@/components/EvaluationPanel";
+import {
+  ResizablePanelGroup,
+  ResizablePanel,
+  ResizableHandle,
+} from "@/components/ui/resizable";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-background">
+      <Header />
+      <div className="h-[calc(100vh-4rem)]">
+        <ResizablePanelGroup direction="horizontal" className="h-full">
+          <ResizablePanel defaultSize={30} minSize={20}>
+            <div className="p-4 h-full">
+              <QuestionPanel />
+            </div>
+          </ResizablePanel>
+          
+          <ResizableHandle withHandle />
+          
+          <ResizablePanel defaultSize={40} minSize={30}>
+            <div className="p-4 h-full">
+              <PracticePanel />
+            </div>
+          </ResizablePanel>
+          
+          <ResizableHandle withHandle />
+          
+          <ResizablePanel defaultSize={30} minSize={20}>
+            <div className="p-4 h-full">
+              <EvaluationPanel />
+            </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </div>
     </div>
   );
