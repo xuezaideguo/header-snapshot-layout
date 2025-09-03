@@ -2,8 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, RotateCcw } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const EvaluationPanel = () => {
+  const { t } = useLanguage();
   // 模拟评估状态
   const evaluation = {
     status: "pending", // "correct", "incorrect", "pending"
@@ -43,7 +45,7 @@ const EvaluationPanel = () => {
     <Card className="h-full">
       <CardHeader>
         <CardTitle className="text-lg flex items-center justify-between">
-          评估结果
+          {t("evaluation")}
           {getStatusBadge()}
         </CardTitle>
       </CardHeader>

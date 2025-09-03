@@ -5,10 +5,12 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const PracticePanel = () => {
   const [selectedStrategy, setSelectedStrategy] = useState<string>("");
   const [freeText, setFreeText] = useState<string>("");
+  const { t } = useLanguage();
 
   const strategies = [
     {
@@ -38,8 +40,8 @@ const PracticePanel = () => {
       <CardHeader>
         <Tabs defaultValue="simple" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="simple">简单版</TabsTrigger>
-            <TabsTrigger value="advanced">困难版</TabsTrigger>
+            <TabsTrigger value="simple">{t("simple")}</TabsTrigger>
+            <TabsTrigger value="advanced">{t("difficult")}</TabsTrigger>
           </TabsList>
           
           <TabsContent value="simple" className="mt-4">
