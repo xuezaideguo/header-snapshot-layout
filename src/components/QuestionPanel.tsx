@@ -3,18 +3,23 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const QuestionPanel = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string>("");
-  const [isLevelMenuOpen, setIsLevelMenuOpen] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState("A1");
+  const [selectedType, setSelectedType] = useState("语法");
   const { t } = useLanguage();
 
   const examLevels = [
@@ -25,6 +30,17 @@ const QuestionPanel = () => {
     { id: "C1", label: t("c1") },
     { id: "C2", label: t("c2") },
   ];
+
+  const exerciseTypes = [
+    { id: "grammar", label: "语法" },
+    { id: "reading", label: "阅读" },
+    { id: "writing", label: "写作" },
+  ];
+
+  const handleLevelAndTypeChange = (level: string, type: string) => {
+    setSelectedLevel(level);
+    setSelectedType(type);
+  };
 
   const question = {
     text: "Wählen Sie die richtige Antwort:",
@@ -40,36 +56,41 @@ const QuestionPanel = () => {
   return (
     <Card className="h-full">
       <CardHeader className="pb-4">
-        <div className="flex items-center space-x-2">
-          <Collapsible open={isLevelMenuOpen} onOpenChange={setIsLevelMenuOpen}>
-            <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="sm" className="p-1">
-                {isLevelMenuOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-lg">{t("question")} - {selectedLevel} - {selectedType}</CardTitle>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="p-2">
+                <Menu className="h-4 w-4" />
               </Button>
-            </CollapsibleTrigger>
-            <CardTitle className="text-lg">{t("question")} - {selectedLevel}</CardTitle>
-            <CollapsibleContent className="absolute z-10 mt-2 bg-card border border-border rounded-md shadow-lg">
-              <div className="p-2 space-y-1">
-                <div className="text-sm font-medium text-muted-foreground px-2 py-1">
-                  {t("examLevel")}
-                </div>
-                {examLevels.map((level) => (
-                  <Button
-                    key={level.id}
-                    variant={selectedLevel === level.id ? "secondary" : "ghost"}
-                    size="sm"
-                    className="w-full justify-start"
-                    onClick={() => {
-                      setSelectedLevel(level.id);
-                      setIsLevelMenuOpen(false);
-                    }}
-                  >
-                    {level.label}
-                  </Button>
-                ))}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end">
+              <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground">
+                {t("examLevel")}
               </div>
-            </CollapsibleContent>
-          </Collapsible>
+              <DropdownMenuSeparator />
+              {examLevels.map((level) => (
+                <DropdownMenuSub key={level.id}>
+                  <DropdownMenuSubTrigger>
+                    <span className={selectedLevel === level.id ? "font-medium" : ""}>
+                      {level.label}
+                    </span>
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    {exerciseTypes.map((type) => (
+                      <DropdownMenuItem
+                        key={type.id}
+                        onClick={() => handleLevelAndTypeChange(level.id, type.label)}
+                        className={selectedLevel === level.id && selectedType === type.label ? "bg-accent" : ""}
+                      >
+                        {type.label}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
