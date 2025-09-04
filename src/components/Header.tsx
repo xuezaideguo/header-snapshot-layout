@@ -24,13 +24,16 @@ const Header = () => {
     <>
       <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6">
         <div className="flex items-center space-x-4">
-          <h1 className="text-xl font-bold text-foreground">{t("title")}</h1>
+          <h1 className="text-xl font-bold text-foreground bg-gradient-to-r from-german-red via-german-gold to-german-black bg-clip-text text-transparent">
+            DeutschPro
+          </h1>
+          <span className="text-sm text-muted-foreground">- 德语考试练习</span>
         </div>
         <div className="flex items-center space-x-2">
           {/* Become Member Button */}
           <Button 
             onClick={() => setMembershipDialogOpen(true)}
-            className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
+            className="bg-german-red text-primary-foreground hover:bg-german-red/90 font-semibold"
             size="sm"
           >
             {t("becomeMember")}
